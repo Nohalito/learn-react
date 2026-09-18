@@ -1,0 +1,462 @@
+{
+  "version": 1,
+  "name": "React — technical interview theory",
+  "items": [
+    {
+      "kind": "card",
+      "front": "React — one-sentence definition",
+      "back": "A JavaScript library (not a framework) for building user interfaces out of composable components. Two core ideas: declarative rendering, and one-way data flow."
+    },
+    {
+      "kind": "card",
+      "front": "Declarative vs imperative UI",
+      "back": "Imperative: you write the DOM steps yourself (createElement, appendChild, classList.add).\nDeclarative: you describe what the UI should look like for a given state, and React works out which DOM operations get it there."
+    },
+    {
+      "kind": "card",
+      "front": "Virtual DOM",
+      "back": "An in-memory tree describing what the UI should be. React builds a new one on each render and compares it with the previous one, so it writes to the real DOM as little as possible. Real DOM writes are expensive; comparing plain objects is cheap."
+    },
+    {
+      "kind": "card",
+      "front": "Reconciliation",
+      "back": "The algorithm that diffs the new virtual tree against the previous one and applies the minimal set of real DOM mutations. It is heuristic, not optimal: it assumes a different element type produces a different subtree, and it matches children by key."
+    },
+    {
+      "kind": "card",
+      "front": "Why lists need keys",
+      "back": "A key gives each item a stable identity so React can tell 'moved' from 'replaced' across renders. Without one, React matches children by position."
+    },
+    {
+      "kind": "card",
+      "front": "Why the array index makes a bad key",
+      "back": "As soon as the list can reorder, filter, insert or delete, positions shift and React associates existing state and DOM nodes with the wrong items. Use a stable id from the data."
+    },
+    {
+      "kind": "card",
+      "front": "JSX — what it actually is",
+      "back": "Syntax sugar. Each element compiles to a call to the JSX runtime (historically React.createElement), producing a plain object that describes the element. JSX is not HTML, and it is not required to use React."
+    },
+    {
+      "kind": "card",
+      "front": "Props",
+      "back": "The inputs a parent passes to a child. Read-only from the child's point of view: a component must never modify its own props."
+    },
+    {
+      "kind": "card",
+      "front": "State",
+      "back": "Data owned by a component that survives across renders and triggers a re-render when it changes."
+    },
+    {
+      "kind": "card",
+      "front": "One-way data flow",
+      "back": "Data travels from parent down to child through props. A child communicates upward by calling a function its parent passed it. There is no automatic two-way binding."
+    },
+    {
+      "kind": "card",
+      "front": "Lifting state up",
+      "back": "When two components need the same data, move that state to their closest common ancestor and pass it down as props, instead of duplicating it in both."
+    },
+    {
+      "kind": "card",
+      "front": "Prop drilling",
+      "back": "Passing a prop through several intermediate components that do not use it, only to reach a deep child. Context is the usual escape hatch."
+    },
+    {
+      "kind": "card",
+      "front": "Controlled component",
+      "back": "A form input whose value comes from React state, with onChange writing back to that state. React is the single source of truth. This is the default to reach for."
+    },
+    {
+      "kind": "card",
+      "front": "Uncontrolled component",
+      "back": "A form input that keeps its own value in the DOM; you read it with a ref, usually on submit. Acceptable for simple forms, and required for file inputs."
+    },
+    {
+      "kind": "card",
+      "front": "Purity of a component",
+      "back": "Render must be a pure function of props and state: the same inputs give the same output, and nothing observable happens during render. Side effects belong in event handlers or effects."
+    },
+    {
+      "kind": "card",
+      "front": "Why state must be updated immutably",
+      "back": "React compares by reference. arr.push(x) followed by setArr(arr) hands back the same reference, so React can skip the re-render. Produce a new value instead: setArr([...arr, x])."
+    },
+    {
+      "kind": "card",
+      "front": "Composition over inheritance",
+      "back": "React reuses code by composing components and passing children and props, never by extending a base component. Class inheritance is effectively unused in React."
+    },
+    {
+      "kind": "card",
+      "front": "The children prop",
+      "back": "Whatever is written between a component's opening and closing tags arrives as props.children. It is the basis of wrapper components such as Card, Modal or Layout."
+    },
+    {
+      "kind": "card",
+      "front": "Fragment",
+      "back": "<>...</> (or <React.Fragment>) lets a component return several elements without adding a wrapper DOM node."
+    },
+    {
+      "kind": "card",
+      "front": "Conditional rendering idioms",
+      "back": "{cond && <X/>} and {cond ? <X/> : <Y/>}.\nTrap: with a number on the left, {count && <X/>} renders a literal 0 when count is 0. Use {count > 0 && ...}."
+    },
+    {
+      "kind": "card",
+      "front": "List rendering idiom",
+      "back": "{items.map(item => <Row key={item.id} item={item} />)} — the key goes on the outermost element returned by the map callback."
+    },
+    {
+      "kind": "card",
+      "front": "The Rules of Hooks",
+      "back": "1. Only call hooks at the top level of a component or custom hook — never inside a condition, a loop, or a nested function.\n2. Only call them from React function components or from other hooks."
+    },
+    {
+      "kind": "card",
+      "front": "Why the Rules of Hooks exist",
+      "back": "React identifies hooks by their call order within a render, not by name. A conditionally called hook shifts that order, and state gets attributed to the wrong hook on the next render."
+    },
+    {
+      "kind": "card",
+      "front": "Custom hook",
+      "back": "A function whose name starts with 'use' and that calls other hooks. It shares stateful logic, not state itself: two components using the same custom hook each get their own independent state."
+    },
+    {
+      "kind": "card",
+      "front": "useState — what it returns",
+      "back": "A pair: [value, setter]. The setter schedules a re-render with the new value; it does not mutate the variable you are currently holding."
+    },
+    {
+      "kind": "card",
+      "front": "State is a snapshot",
+      "back": "Within one render, a state variable is a fixed value. Calling setCount(count + 1) twice in the same handler increments once, because both calls read the same snapshot."
+    },
+    {
+      "kind": "card",
+      "front": "Functional update",
+      "back": "setCount(c => c + 1). The updater receives the latest pending state, so several updates in one handler compose correctly. Use it whenever the next state depends on the previous one."
+    },
+    {
+      "kind": "card",
+      "front": "Batching",
+      "back": "React groups several state updates into a single re-render. Since React 18 this happens everywhere — event handlers, promises, timeouts — not only in event handlers."
+    },
+    {
+      "kind": "card",
+      "front": "useEffect — what it is for",
+      "back": "Synchronising a component with an external system: network requests, subscriptions, timers, manual DOM work, non-React libraries. It is not a general 'run some code after render' hook."
+    },
+    {
+      "kind": "card",
+      "front": "useEffect dependency array",
+      "back": "[] runs once after mount. [a, b] re-runs whenever a or b changes by Object.is. Omitted entirely, it runs after every render. Every reactive value used inside the effect must appear in the list."
+    },
+    {
+      "kind": "card",
+      "front": "useEffect cleanup",
+      "back": "The function returned from the effect. React runs it before the next run of that same effect and on unmount — to clear timers, unsubscribe, abort in-flight fetches."
+    },
+    {
+      "kind": "card",
+      "front": "'You might not need an effect'",
+      "back": "Do not use an effect to derive state from props or state — compute it during render. Do not use one to react to a user action — do it in the event handler. Effects are for external systems only."
+    },
+    {
+      "kind": "card",
+      "front": "useRef",
+      "back": "Returns a mutable { current } box that persists across renders and does not trigger a re-render when changed. Two uses: reaching a DOM node, and storing mutable values such as timer ids or a previous value."
+    },
+    {
+      "kind": "card",
+      "front": "useMemo",
+      "back": "Caches the result of a computation between renders for as long as its dependencies are unchanged. Use it for genuinely expensive work, or to keep an object or array reference stable for a memoised child."
+    },
+    {
+      "kind": "card",
+      "front": "useCallback",
+      "back": "Caches a function definition between renders. The point is referential stability: so a React.memo child does not re-render, or an effect that depends on the function does not re-fire. useCallback(fn, deps) is exactly useMemo(() => fn, deps)."
+    },
+    {
+      "kind": "card",
+      "front": "useContext",
+      "back": "Reads the value of the nearest matching Provider above in the tree, avoiding prop drilling. Every consumer re-renders when the provider's value changes."
+    },
+    {
+      "kind": "card",
+      "front": "Is Context a state manager?",
+      "back": "No. It is a transport mechanism for passing a value down the tree without prop drilling. The state itself still lives in a useState or useReducer somewhere above the Provider."
+    },
+    {
+      "kind": "card",
+      "front": "useReducer",
+      "back": "State managed by a (state, action) => newState function. Preferred over useState when several fields change together or transitions are complex; it also makes the update logic testable on its own."
+    },
+    {
+      "kind": "card",
+      "front": "useLayoutEffect",
+      "back": "Same as useEffect, but runs synchronously after the DOM is mutated and before the browser paints. Use it only when you must measure layout and adjust before the user could see a flicker — it blocks painting."
+    },
+    {
+      "kind": "card",
+      "front": "useTransition",
+      "back": "Marks a state update as non-urgent so React can keep the interface responsive while it renders, and gives you an isPending flag to show a hint meanwhile."
+    },
+    {
+      "kind": "card",
+      "front": "useId",
+      "back": "Generates a stable unique id that matches between the server and client render — for linking a label to an input, for example. Not for list keys."
+    },
+    {
+      "kind": "card",
+      "front": "When does a component re-render?",
+      "back": "Its own state changed, its parent re-rendered, or a context it consumes changed.\nNotably NOT 'when its props changed' — a re-rendering parent re-renders its children regardless of their props."
+    },
+    {
+      "kind": "card",
+      "front": "React.memo",
+      "back": "Wraps a component so it skips re-rendering when its props are shallowly equal to the previous ones. Defeated by passing a freshly created object, array or inline function as a prop on every render."
+    },
+    {
+      "kind": "card",
+      "front": "Shallow comparison",
+      "back": "Each prop compared with Object.is. {a: 1} and {a: 1} are two different references and therefore compare as different — which is why inline object props break memoisation."
+    },
+    {
+      "kind": "card",
+      "front": "Order of operations when optimising React",
+      "back": "First fix the state shape and where the state lives — move it down, or out of a parent that re-renders everything. Only then reach for memo, useMemo and useCallback."
+    },
+    {
+      "kind": "card",
+      "front": "StrictMode",
+      "back": "A development-only wrapper that deliberately double-invokes renders and effects (mount, unmount, mount again) to surface impure renders and missing cleanup. It has no effect in a production build."
+    },
+    {
+      "kind": "card",
+      "front": "Error boundary",
+      "back": "A component that catches JavaScript errors thrown while rendering its subtree and shows a fallback instead of a blank page. Only class components can be error boundaries (or a wrapper library). It does not catch errors in event handlers or async code."
+    },
+    {
+      "kind": "card",
+      "front": "Suspense",
+      "back": "<Suspense fallback={...}> declares what to show while something inside is still loading — a lazily loaded component, or data with a framework that supports it."
+    },
+    {
+      "kind": "card",
+      "front": "React.lazy",
+      "back": "Code-splits a component so its bundle is fetched on first render. Must be rendered inside a Suspense boundary."
+    },
+    {
+      "kind": "card",
+      "front": "Portal",
+      "back": "createPortal(children, domNode) renders children into a different part of the DOM while keeping them in the React tree — so events still bubble to the React parent. Used for modals, tooltips and dropdowns."
+    },
+    {
+      "kind": "card",
+      "front": "CSR — client-side rendering",
+      "back": "The server sends a near-empty HTML shell and JavaScript builds the page in the browser. Fast in-app navigation, slow first paint, weak SEO without extra work."
+    },
+    {
+      "kind": "card",
+      "front": "SSR — server-side rendering",
+      "back": "HTML is generated per request on the server and sent complete, then hydrated in the browser. Good first paint and SEO, at the cost of server work on every request."
+    },
+    {
+      "kind": "card",
+      "front": "SSG — static site generation",
+      "back": "HTML is built once at build time and served as a static file. Fastest and cheapest to serve; the content is only as fresh as the last build."
+    },
+    {
+      "kind": "card",
+      "front": "ISR — incremental static regeneration",
+      "back": "Statically generated pages are re-generated in the background after a set interval, giving static-file speed with periodically refreshed content."
+    },
+    {
+      "kind": "card",
+      "front": "Hydration",
+      "back": "The browser receives server-rendered HTML, then React attaches its event listeners and state to that existing markup rather than recreating it. A difference between the server and client output is a hydration mismatch error."
+    },
+    {
+      "kind": "card",
+      "front": "Server Component vs Client Component",
+      "back": "A Server Component runs only on the server, never ships to the client bundle, and cannot use state, effects or browser APIs — but can read a database directly. A Client Component is marked with 'use client' and behaves like ordinary React."
+    },
+    {
+      "kind": "card",
+      "front": "React 19 — ref as a prop",
+      "back": "Function components now receive ref as an ordinary prop. forwardRef is no longer needed."
+    },
+    {
+      "kind": "card",
+      "front": "React 19 — use()",
+      "back": "An API that reads the value of a promise or of a context. Unlike a hook, it may be called conditionally and inside loops."
+    },
+    {
+      "kind": "card",
+      "front": "React 19 — useOptimistic",
+      "back": "Shows an optimistic state immediately while an async action is in flight, and reverts automatically if the action fails."
+    },
+    {
+      "kind": "card",
+      "front": "React 19 — form Actions and useActionState",
+      "back": "A form's action can be an async function. useActionState returns its result, a pending flag and a wrapped action, removing the manual useState plumbing around submission state."
+    },
+    {
+      "kind": "card",
+      "front": "React Compiler",
+      "back": "A build-time compiler that memoises components and values automatically, largely removing the need to write useMemo and useCallback by hand."
+    },
+    {
+      "kind": "card",
+      "front": "Symptom: state changes but the UI does not update",
+      "back": "You mutated the existing object or array instead of creating a new one, so the reference is unchanged and React bails out. Also check you are not setting state to the same primitive value."
+    },
+    {
+      "kind": "card",
+      "front": "Symptom: useEffect loops forever",
+      "back": "Either there is no dependency array and a setState inside, or a dependency is an object, array or function literal — a new reference on every render."
+    },
+    {
+      "kind": "card",
+      "front": "Symptom: the page reloads when the form is submitted",
+      "back": "Missing e.preventDefault() in the submit handler. Classic live-coding disaster."
+    },
+    {
+      "kind": "card",
+      "front": "Stale closure",
+      "back": "A callback created during one render captures that render's values forever. A setInterval registered once keeps reading the first render's state. Fix with a functional update, or by keeping the value in a ref."
+    },
+    {
+      "kind": "card",
+      "front": "Race condition in data fetching",
+      "back": "A slower earlier request resolves after a faster later one and overwrites the correct result. Fix by aborting in the effect's cleanup with an AbortController, or by ignoring stale responses with a cancelled flag."
+    },
+    {
+      "kind": "card",
+      "front": "Symptom: 'Cannot update a component while rendering a different component'",
+      "back": "You called a setState during render, instead of inside an event handler or an effect."
+    },
+    {
+      "kind": "card",
+      "front": "Symptom: the input loses focus or resets on every keystroke",
+      "back": "A component is defined inside another component's body, so it is a brand-new component type on every render and React unmounts and remounts it. Move the definition outside."
+    },
+    {
+      "kind": "card",
+      "front": "Symptom: 'Objects are not valid as a React child'",
+      "back": "You rendered an object, an array of objects, or a promise directly. Render a string, a number, or an element."
+    },
+    {
+      "kind": "card",
+      "front": "Cancel-safe fetch inside useEffect",
+      "back": "const ctrl = new AbortController();\nfetch(url, { signal: ctrl.signal })\n  .then(r => r.json())\n  .then(setData)\n  .catch(e => { if (e.name !== 'AbortError') setError(e); });\nreturn () => ctrl.abort();"
+    },
+    {
+      "kind": "card",
+      "front": "useDebounce — write it from memory",
+      "back": "function useDebounce(value, delay = 300) {\n  const [debounced, setDebounced] = useState(value);\n  useEffect(() => {\n    const id = setTimeout(() => setDebounced(value), delay);\n    return () => clearTimeout(id);\n  }, [value, delay]);\n  return debounced;\n}"
+    },
+    {
+      "kind": "question",
+      "prompt": "Which hook stores a mutable value that persists across renders WITHOUT causing a re-render when it changes?",
+      "answers": [
+        { "text": "useRef", "explain": "Returns a { current } box. Writing to .current does not schedule a render.", "correct": true },
+        { "text": "useState", "explain": "Persists across renders, but every change schedules a re-render.", "correct": false },
+        { "text": "useMemo", "explain": "Caches a computed value, recomputed whenever its dependencies change. It is not a writable box.", "correct": false },
+        { "text": "useEffect", "explain": "Runs side effects after render. It stores nothing.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "count is 0. A single click handler calls setCount(count + 1) three times. What is count after the re-render?",
+      "answers": [
+        { "text": "1", "explain": "State is a snapshot: all three calls read count as 0 and each schedules 'set it to 1'.", "correct": true },
+        { "text": "3", "explain": "That is what setCount(c => c + 1) three times would give — the functional form reads the latest pending state.", "correct": false },
+        { "text": "0", "explain": "The updates do take effect; the value does change.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "A parent re-renders. Its child receives exactly the same props as before. Does the child re-render?",
+      "answers": [
+        { "text": "Yes, unless the child is wrapped in React.memo", "explain": "A re-rendering parent re-renders its whole subtree by default. Identical props change nothing on their own.", "correct": true },
+        { "text": "No — React skips it because the props are unchanged", "explain": "This is only true once the child is wrapped in React.memo.", "correct": false },
+        { "text": "Only if the child holds state of its own", "explain": "Own state is one trigger for re-rendering, but a parent's render is an independent one.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "What is the function returned from a useEffect callback for?",
+      "answers": [
+        { "text": "Cleanup — React runs it before the effect's next run and on unmount", "explain": "Clearing timers, unsubscribing, aborting requests.", "correct": true },
+        { "text": "It runs once the effect has finished, as a completion callback", "explain": "React does not treat it as a completion callback; it is deferred until teardown.", "correct": false },
+        { "text": "It provides the effect's value back to the component", "explain": "useEffect returns nothing to the component. Use state to expose a value.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "Which is the correct way to append an item to an array held in state?",
+      "answers": [
+        { "text": "setItems([...items, newItem])", "explain": "A new array, so a new reference, so React re-renders.", "correct": true },
+        { "text": "items.push(newItem); setItems(items)", "explain": "Mutates the existing array and passes back the same reference — React may skip the re-render entirely.", "correct": false },
+        { "text": "setItems(items.push(newItem))", "explain": "push returns the array's new length, so state becomes a number.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "Why must hooks never be called inside a condition?",
+      "answers": [
+        { "text": "React identifies hooks by their call order within a render", "explain": "Skip one and every later hook shifts position, so state is attributed to the wrong hook.", "correct": true },
+        { "text": "Because a condition makes the component impure", "explain": "Conditional logic is perfectly fine in a component; the constraint is specific to how hook state is tracked.", "correct": false },
+        { "text": "Because it would break the virtual DOM diff", "explain": "Reconciliation compares rendered output and is unrelated to hook ordering.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "What does StrictMode do in a production build?",
+      "answers": [
+        { "text": "Nothing — it is development-only", "explain": "The extra checks are stripped in production.", "correct": true },
+        { "text": "It double-invokes effects to catch missing cleanup", "explain": "It does exactly this, but only in development.", "correct": false },
+        { "text": "It enables stricter runtime checking of prop types", "explain": "Prop type checking is a separate concern (PropTypes or TypeScript), not part of StrictMode.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "Which rendering strategy produces the HTML once, at build time?",
+      "answers": [
+        { "text": "SSG", "explain": "Static site generation: built once, served as a static file.", "correct": true },
+        { "text": "SSR", "explain": "Server-side rendering builds the HTML per request.", "correct": false },
+        { "text": "CSR", "explain": "Client-side rendering builds the page in the browser at runtime.", "correct": false },
+        { "text": "ISR", "explain": "Incremental static regeneration starts from static output but re-generates it periodically after the build.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "When is using the array index as a key acceptable?",
+      "answers": [
+        { "text": "When the list is static — never reordered, filtered, inserted into or deleted from", "explain": "With fixed positions, index and identity coincide.", "correct": true },
+        { "text": "Whenever the items have no id field", "explain": "A missing id is not a justification — derive or generate a stable one.", "correct": false },
+        { "text": "Never — an index key is always a bug", "explain": "Too strong: React's own documentation allows it for a stable list. It becomes a bug once order can change.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "What exactly does React.memo compare between renders?",
+      "answers": [
+        { "text": "The props, shallowly, using Object.is on each one", "explain": "Which is why a fresh inline object or arrow function prop defeats it.", "correct": true },
+        { "text": "The props, deeply", "explain": "A deep comparison would often cost more than the re-render it avoids; React does not do it.", "correct": false },
+        { "text": "The rendered output, to decide whether to touch the DOM", "explain": "That describes reconciliation, which happens after rendering. memo avoids the render altogether.", "correct": false }
+      ]
+    },
+    {
+      "kind": "question",
+      "prompt": "Which of these belongs in an event handler rather than in a useEffect?",
+      "answers": [
+        { "text": "Sending an analytics event when the user clicks Buy", "explain": "It is caused by a specific interaction, not by the component being displayed.", "correct": true },
+        { "text": "Subscribing to a WebSocket for as long as the component is shown", "explain": "An external system tied to the component's lifetime — an effect, with an unsubscribe cleanup.", "correct": false },
+        { "text": "Starting an interval timer when the component mounts", "explain": "Also tied to the component's lifetime, and needs a clearInterval cleanup.", "correct": false }
+      ]
+    }
+  ]
+}
