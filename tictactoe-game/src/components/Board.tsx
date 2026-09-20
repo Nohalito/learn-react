@@ -4,9 +4,10 @@ type BoardProps = {
   xIsNext: boolean;
   squares: Array<string>;
   onPlay:(nextSquares: Array<string>) => void;
+  move: number;
 }
 
-function Board({ xIsNext, squares, onPlay }: BoardProps) {
+function Board({ xIsNext, squares, onPlay, move}: BoardProps) {
 
   function handleClick(i:number) {
     const nextSquares = squares.slice();
@@ -47,6 +48,8 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
   
   if (winner) {
     status = "Winner: " + winner;
+  } else if (move === 9) {
+  status = "Draw!";
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
